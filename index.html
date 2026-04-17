@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.59/build/spline-viewer.js"></script>
+    <title>Abhishek Rathore | DevOps Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --space-black: #020510;
+            --space-deep: #071022;
+            --space-mid: #0b1730;
+            --space-card: rgba(13, 30, 53, 0.78);
+            --nebula-blue: #1a3a5c;
+            --accent-cyan: #00d4ff;
+            --accent-blue: #4d8fff;
+            --accent-purple: #8b5cf6;
+            --accent-teal: #06b6d4;
+            --star-white: #e8f4fd;
+            --text-primary: #c8e6ff;
+            --text-muted: #6b8da8;
+            --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.4);
+            --glow-blue: 0 0 28px rgba(77, 143, 255, 0.28);
+            --glow-purple: 0 0 26px rgba(139, 92, 246, 0.22);
+            --border-soft: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(77, 143, 255, 0.12), transparent 26%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1), transparent 22%),
+                linear-gradient(180deg, #030712 0%, #050d1f 32%, #020510 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        #stars-canvas,
+        #meteor-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .nebula-bg {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.13;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .nebula-1 {
+            width: 640px;
+            height: 640px;
+            background: #4d8fff;
+            top: -120px;
+            left: -200px;
+            animation: drift 18s ease-in-out infinite;
+        }
+
+        .nebula-2 {
+            width: 540px;
+            height: 540px;
+            background: #8b5cf6;
+            top: 34%;
+            right: -180px;
+            animation: drift 22s ease-in-out infinite reverse;
+        }
+
+        .nebula-3 {
+            width: 420px;
+            height: 420px;
+            background: #06b6d4;
+            bottom: 6%;
+            left: 18%;
+            animation: drift 20s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+            50% { transform: translate3d(18px, -24px, 0) scale(1.05); }
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+            background: rgba(2, 5, 16, 0.74);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.08);
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--accent-cyan);
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 12px rgba(0, 212, 255, 0.45);
+        }
+
+        #hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(320px, 500px);
+            align-items: center;
+            padding: 7rem 4rem 4rem;
+            gap: 4rem;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .hero-text {
+            animation: fadeUp 0.9s ease both;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 100px;
+            padding: 6px 16px;
+            font-size: 0.78rem;
+            color: var(--accent-cyan);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--glow-cyan);
+        }
+
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 520px; 
+        }
+
+        .hero-visual {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-visual spline-viewer {
+    width: 100%;
+    height: 520px;
+    transform: scale(1.08); /* pushes logo out */
+    transform-origin: center;
+}
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        .hero-name {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.75rem, 5vw, 4.6rem);
+            font-weight: 900;
+            line-height: 1.04;
+            margin-bottom: 0.6rem;
+            background: linear-gradient(135deg, #ffffff 0%, #97ecff 45%, #4d8fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-role {
+            font-size: 1.15rem;
+            color: #b692ff;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 520px;
+            margin-bottom: 2.5rem;
+            line-height: 1.9;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            min-width: 132px;
+            padding: 0.9rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            backdrop-filter: blur(14px);
+        }
+
+        .stat-number {
+            display: block;
+            font-family: 'Orbitron', monospace;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary,
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            padding: 0.8rem 1.75rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: var(--space-black);
+            font-weight: 700;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 34px rgba(0, 212, 255, 0.58);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 212, 255, 0.35);
+            font-weight: 500;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 212, 255, 0.08);
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            perspective: 1400px;
+            min-height: 560px;
+            animation: fadeUp 1s ease 0.12s both;
+        }
+
+        .avatar-scene {
+            position: relative;
+            width: 420px;
+            height: 520px;
+            transform-style: preserve-3d;
+            transition: transform 0.18s ease-out;
+            will-change: transform;
+        }
+
+        .scene-core,
+        .portrait-backdrop {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(12px);
+        }
+
+        .scene-core {
+            inset: 54px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 30% 30%, rgba(255, 189, 143, 0.28), transparent 36%),
+                radial-gradient(circle at 70% 70%, rgba(96, 196, 255, 0.26), transparent 34%),
+                rgba(255, 255, 255, 0.02);
+            transform: translateZ(-120px);
+        }
+
+        .portrait-backdrop-a {
+            width: 290px;
+            height: 290px;
+            background: radial-gradient(circle, rgba(255, 174, 136, 0.34), rgba(255, 174, 136, 0.04) 68%, transparent 72%);
+            top: 36px;
+            left: -18px;
+            transform: translateZ(-80px);
+        }
+
+        .portrait-backdrop-b {
+            width: 310px;
+            height: 310px;
+            background: radial-gradient(circle, rgba(68, 180, 255, 0.28), rgba(68, 180, 255, 0.04) 64%, transparent 72%);
+            right: -8px;
+            bottom: 68px;
+            transform: translateZ(-90px);
+        }
+
+        .portrait-card {
+            position: absolute;
+            top: 30px;
+            left: 52px;
+            width: 316px;
+            height: 426px;
+            border-radius: 34px;
+            padding: 12px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05));
+            border: 1px solid rgba(255,255,255,0.16);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(14px);
+            transform: translateZ(34px);
+            overflow: hidden;
+        }
+
+        .portrait-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.46), rgba(255,255,255,0.06));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .portrait-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 26px;
+            overflow: hidden;
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0)),
+                linear-gradient(135deg, #fff5ef 0%, #ffd7c2 28%, #accfff 100%);
+        }
+
+        .portrait-image {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center center;
+            transform: scale(1.03);
+        }
+
+        .portrait-note,
+        .portrait-tag {
+            position: absolute;
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14);
+            animation: driftLabel 5.2s ease-in-out infinite;
+        }
+
+        .portrait-note {
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.12);
+            color: #fff8f4;
+            font-size: 0.84rem;
+            line-height: 1.4;
+            transform: translateZ(72px);
+        }
+
+        .portrait-note strong,
+        .portrait-tag strong {
+            display: block;
+            color: white;
+            font-weight: 700;
+        }
+
+        .note-1 {
+            right: -8px;
+            top: 82px;
+            min-width: 150px;
+            animation-delay: 0.4s;
+        }
+
+        .note-2 {
+            left: -14px;
+            bottom: 92px;
+            min-width: 176px;
+            animation-delay: 1.2s;
+        }
+
+        .portrait-tag {
+            left: 10px;
+            top: 12px;
+            padding: 0.7rem 0.9rem;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.18);
+            color: #1d2944;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transform: translateZ(90px);
+        }
+
+        .portrait-shadow {
+            position: absolute;
+            bottom: 18px;
+            left: 88px;
+            width: 250px;
+            height: 46px;
+            background: radial-gradient(ellipse, rgba(255, 184, 145, 0.28), rgba(68, 180, 255, 0.18) 46%, transparent 74%);
+            filter: blur(18px);
+            transform: translateZ(-40px);
+        }
+
+        @keyframes driftLabel {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        section {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-label {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.72rem;
+            color: var(--accent-cyan);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-sub {
+            color: var(--text-muted);
+            max-width: 550px;
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+        }
+
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), transparent);
+            margin-bottom: 2.5rem;
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-chip {
+            background: var(--space-card);
+            border: 1px solid rgba(0, 212, 255, 0.12);
+            border-radius: 14px;
+            padding: 1.1rem 1rem;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s, background 0.3s;
+            backdrop-filter: blur(14px);
+        }
+
+        .skill-chip:hover {
+            border-color: rgba(0, 212, 255, 0.4);
+            background: rgba(0, 212, 255, 0.05);
+            transform: translateY(-4px);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .skill-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-name {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: rgba(13, 30, 53, 0.64);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 18px;
+            padding: 1.75rem;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(14px);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: rgba(0, 212, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.36), var(--glow-blue);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-tag {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            color: var(--accent-cyan);
+            font-size: 0.65rem;
+            padding: 3px 10px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        .timeline {
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--accent-cyan), transparent);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            padding: 0 0 2.5rem;
+            position: relative;
+        }
+
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            background: rgba(13, 30, 53, 0.92);
+            border: 2px solid var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            box-shadow: var(--glow-cyan);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            background: rgba(13, 30, 53, 0.62);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+            flex: 1;
+            backdrop-filter: blur(14px);
+        }
+
+        .timeline-role {
+            font-weight: 600;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-company {
+            color: var(--accent-cyan);
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-date {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.75;
+        }
+
+        .edu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .edu-card {
+            background: rgba(13, 30, 53, 0.7);
+            border: 1px solid rgba(139, 92, 246, 0.16);
+            border-radius: 18px;
+            padding: 1.75rem;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(14px);
+        }
+
+        .edu-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(139, 92, 246, 0.35);
+            box-shadow: 0 0 22px rgba(139, 92, 246, 0.16);
+        }
+
+        .edu-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .edu-degree {
+            font-weight: 600;
+            color: white;
+            font-size: 0.96rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .edu-school {
+            color: var(--accent-purple);
+            font-size: 0.86rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .edu-year {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        #contact {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .contact-card {
+            max-width: 680px;
+            margin: 0 auto;
+            background: rgba(13, 30, 53, 0.76);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 24px;
+            padding: 3rem;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 22px 50px rgba(0, 0, 0, 0.22);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.7rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            transition: transform 0.3s, color 0.3s, border-color 0.3s, background 0.3s;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-2px);
+            color: var(--accent-cyan);
+            border-color: rgba(0, 212, 255, 0.3);
+            background: rgba(0, 212, 255, 0.06);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 980px) {
+            #hero {
+                grid-template-columns: 1fr;
+                padding: 6rem 1.5rem 3rem;
+                text-align: center;
+            }
+
+            .hero-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-stats,
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                min-height: 440px;
+            }
+
+            .avatar-scene {
+                width: 360px;
+                height: 470px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.25rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-visual {
+                min-height: 420px;
+                order: -1;
+            }
+
+            .avatar-scene {
+                width: 300px;
+                height: 390px;
+            }
+
+            .portrait-card {
+                left: 32px;
+                width: 236px;
+                height: 324px;
+                border-radius: 24px;
+            }
+
+            .portrait-card-inner {
+                border-radius: 18px;
+            }
+
+            .portrait-note {
+                padding: 0.65rem 0.8rem;
+                font-size: 0.75rem;
+            }
+
+            .note-1 {
+                right: -4px;
+                top: 62px;
+                min-width: 136px;
+            }
+
+            .note-2 {
+                left: -2px;
+                bottom: 36px;
+                min-width: 146px;
+            }
+
+            .portrait-tag {
+                left: 16px;
+                top: 8px;
+                font-size: 0.72rem;
+            }
+
+            .portrait-shadow {
+                left: 46px;
+                width: 200px;
+                bottom: 20px;
+            }
+
+            .edu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="stars-canvas"></canvas>
+    <canvas id="meteor-canvas"></canvas>
+    <div class="nebula-bg nebula-1"></div>
+    <div class="nebula-bg nebula-2"></div>
+    <div class="nebula-bg nebula-3"></div>
+
+    <nav>
+        <a href="#hero" class="nav-logo">AR/</a>
+        <ul class="nav-links">
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="hero">
+            <div class="hero-text">
+                <div class="badge">
+                    <span class="badge-dot"></span>
+                    Open to Opportunities
+                </div>
+                <h1 class="hero-name">Abhishek<br>Rathore</h1>
+                <p class="hero-role">Aspiring DevOps Engineer</p>
+                <p class="hero-desc">Building infrastructure that runs at the speed of space. Skilled in AWS, Docker, Ansible, and cloud-native tooling, turning manual workflows into automated systems.</p>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">Cloud</span>
+                        <span class="stat-label">AWS Focused</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">CI/CD</span>
+                        <span class="stat-label">Automation Mindset</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">Infra</span>
+                        <span class="stat-label">DevOps Projects</span>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <a href="mailto:worknabhishek@gmail.com" class="btn-primary">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Get in Touch
+                    </a>
+                    <a href="https://linkedin.com/in/worknabhishek" target="_blank" rel="noreferrer" class="btn-outline">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <spline-viewer 
+                    url="assets/scene.splinecode"
+                    style="width: 100%; height: 520px;">
+                </spline-viewer>
+            </div>
+        </section>
+
+        <section id="skills" class="reveal">
+            <p class="section-label">// Technical Arsenal</p>
+            <h2 class="section-title">Skills & Technologies</h2>
+            <p class="section-sub">A stack built around automation, observability, reliable deployments, and practical cloud operations.</p>
+            <div class="divider"></div>
+            <div class="skills-grid">
+                <div class="skill-chip"><div class="skill-icon">🐧</div><div class="skill-name">Linux</div></div>
+                <div class="skill-chip"><div class="skill-icon">☁️</div><div class="skill-name">AWS Cloud</div></div>
+                <div class="skill-chip"><div class="skill-icon">🐳</div><div class="skill-name">Docker</div></div>
+                <div class="skill-chip"><div class="skill-icon">⚙️</div><div class="skill-name">Ansible</div></div>
+                <div class="skill-chip"><div class="skill-icon">☸️</div><div class="skill-name">Kubernetes</div></div>
+                <div class="skill-chip"><div class="skill-icon">🔧</div><div class="skill-name">Jenkins</div></div>
+                <div class="skill-chip"><div class="skill-icon">🏗️</div><div class="skill-name">Terraform</div></div>
+                <div class="skill-chip"><div class="skill-icon">🐙</div><div class="skill-name">Git & GitHub</div></div>
+                <div class="skill-chip"><div class="skill-icon">📊</div><div class="skill-name">Grafana</div></div>
+                <div class="skill-chip"><div class="skill-icon">🔍</div><div class="skill-name">Prometheus</div></div>
+                <div class="skill-chip"><div class="skill-icon">🛡️</div><div class="skill-name">Nagios</div></div>
+                <div class="skill-chip"><div class="skill-icon">🐍</div><div class="skill-name">Python & Bash</div></div>
+            </div>
+        </section>
+
+        <section id="projects" class="reveal">
+            <p class="section-label">// Mission Logs</p>
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-sub">Hands-on DevOps work focused on deployment flow, infrastructure automation, and production-style environments.</p>
+            <div class="divider"></div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <span class="project-tag">Docker · Flask</span>
+                    <h3 class="project-title">Containerized Python Web App</h3>
+                    <p class="project-desc">Built and deployed a Flask-based application using Docker. Optimized Dockerfiles for efficiency and configured container networking for inter-service communication.</p>
+                </div>
+                <div class="project-card">
+                    <span class="project-tag">Ansible · IaC</span>
+                    <h3 class="project-title">Self-Healing Server Automation</h3>
+                    <p class="project-desc">Created Ansible playbooks to automate server configuration, service restarts, and state management, implementing self-healing infrastructure with IaC principles.</p>
+                </div>
+                <div class="project-card">
+                    <span class="project-tag">AWS · Nginx</span>
+                    <h3 class="project-title">AWS EC2 + Nginx Deployment</h3>
+                    <p class="project-desc">Deployed Nginx from scratch on AWS EC2, managing services via systemctl and securing access through AWS Security Groups and IAM policies.</p>
+                </div>
+                <div class="project-card">
+                    <span class="project-tag">Docker · CI/CD</span>
+                    <h3 class="project-title">Docker Multi-Stage Builds</h3>
+                    <p class="project-desc">Implemented multi-stage Docker builds to reduce image sizes and cleanly separate build environments from production runtimes.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="reveal">
+            <p class="section-label">// Mission History</p>
+            <h2 class="section-title">Experience</h2>
+            <div class="divider"></div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">🌐</div>
+                    <div class="timeline-content">
+                        <div class="timeline-role">Global Operations Associate</div>
+                        <div class="timeline-company">SOLID Summit by The Cowen Group</div>
+                        <div class="timeline-date">Mar 2025 - Nov 2025</div>
+                        <div class="timeline-desc">Managed databases, coordinated global events, and executed organic marketing campaigns using Mailchimp and WordPress for international audiences.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">⚡</div>
+                    <div class="timeline-content">
+                        <div class="timeline-role">Process Operations Associate</div>
+                        <div class="timeline-company">FBSPL</div>
+                        <div class="timeline-date">Mar 2025 - Nov 2025</div>
+                        <div class="timeline-desc">Executed high-quality operational workflows meeting rigorous international client standards, contributing to process efficiency improvements.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="reveal">
+            <p class="section-label">// Training Academy</p>
+            <h2 class="section-title">Education & Certifications</h2>
+            <div class="divider"></div>
+            <div class="edu-grid">
+                <div class="edu-card">
+                    <div class="edu-icon">🎓</div>
+                    <div class="edu-degree">B.Tech in Computer Science</div>
+                    <div class="edu-school">JECRC, Jaipur Engineering College</div>
+                    <div class="edu-year">2020 - 2024</div>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-icon">🚀</div>
+                    <div class="edu-degree">DevOps & Cloud Training</div>
+                    <div class="edu-school">DUCAT, Noida · In Progress</div>
+                    <div class="edu-year">Kubernetes · Jenkins · Terraform · AWS</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="reveal">
+            <div class="contact-card">
+                <p class="section-label" style="margin-bottom: 0.5rem;">// Establish Contact</p>
+                <h2 class="section-title" style="margin-bottom: 0.75rem;">Let's Connect</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Open to DevOps roles, cloud infrastructure projects, and collaboration opportunities. Let's build something great.</p>
+                <div class="contact-links">
+                    <a href="mailto:worknabhishek@gmail.com" class="contact-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        worknabhishek@gmail.com
+                    </a>
+                    <a href="https://linkedin.com/in/worknabhishek" target="_blank" rel="noreferrer" class="contact-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        LinkedIn
+                    </a>
+                    <a href="https://github.com/worknabhishek" target="_blank" rel="noreferrer" class="contact-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Designed & Built by Abhishek Rathore · <span style="color: var(--accent-cyan);">2025</span></p>
+    </footer>
+
+    <script>
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const starCanvas = document.getElementById('stars-canvas');
+        const starCtx = starCanvas.getContext('2d');
+        const meteorCanvas = document.getElementById('meteor-canvas');
+        const meteorCtx = meteorCanvas.getContext('2d');
+
+        let stars = [];
+        let meteors = [];
+
+        function resizeCanvas() {
+            starCanvas.width = window.innerWidth;
+            starCanvas.height = window.innerHeight;
+            meteorCanvas.width = window.innerWidth;
+            meteorCanvas.height = window.innerHeight;
+        }
+
+        function initStars() {
+            stars = [];
+            const count = window.innerWidth < 768 ? 120 : 220;
+            for (let i = 0; i < count; i += 1) {
+                stars.push({
+                    x: Math.random() * starCanvas.width,
+                    y: Math.random() * starCanvas.height,
+                    r: Math.random() * 1.5 + 0.2,
+                    drift: Math.random() * 0.12 + 0.02,
+                    opacity: Math.random() * 0.7 + 0.2,
+                    twinkle: Math.random() * Math.PI * 2
+                });
+            }
+        }
+
+        function drawStars(time) {
+            starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+            stars.forEach((star) => {
+                star.y += star.drift;
+                if (star.y > starCanvas.height + 2) {
+                    star.y = -2;
+                    star.x = Math.random() * starCanvas.width;
+                }
+
+                const pulse = star.opacity * (0.62 + 0.38 * Math.sin(star.twinkle + time * 0.002));
+                starCtx.beginPath();
+                starCtx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+                starCtx.fillStyle = `rgba(200, 230, 255, ${pulse})`;
+                starCtx.fill();
+            });
+        }
+
+        function spawnMeteor() {
+            meteors.push({
+                x: Math.random() * meteorCanvas.width * 0.75,
+                y: Math.random() * meteorCanvas.height * 0.35,
+                len: Math.random() * 80 + 60,
+                speed: Math.random() * 8 + 8,
+                life: 0,
+                ttl: Math.random() * 40 + 40
+            });
+        }
+
+        function drawMeteors() {
+            meteorCtx.clearRect(0, 0, meteorCanvas.width, meteorCanvas.height);
+            meteors = meteors.filter((meteor) => meteor.life < meteor.ttl);
+
+            meteors.forEach((meteor) => {
+                meteor.life += 1;
+                meteor.x += meteor.speed;
+                meteor.y += meteor.speed * 0.5;
+
+                const alpha = 1 - meteor.life / meteor.ttl;
+                const gradient = meteorCtx.createLinearGradient(meteor.x, meteor.y, meteor.x - meteor.len, meteor.y - meteor.len * 0.5);
+                gradient.addColorStop(0, `rgba(255,255,255,${alpha})`);
+                gradient.addColorStop(0.4, `rgba(0,212,255,${alpha * 0.7})`);
+                gradient.addColorStop(1, 'rgba(0,212,255,0)');
+
+                meteorCtx.strokeStyle = gradient;
+                meteorCtx.lineWidth = 2;
+                meteorCtx.beginPath();
+                meteorCtx.moveTo(meteor.x, meteor.y);
+                meteorCtx.lineTo(meteor.x - meteor.len, meteor.y - meteor.len * 0.5);
+                meteorCtx.stroke();
+            });
+        }
+
+        function animateSky(time) {
+            drawStars(time);
+            drawMeteors();
+            if (!prefersReducedMotion) {
+                requestAnimationFrame(animateSky);
+            }
+        }
+
+        resizeCanvas();
+        initStars();
+
+        if (!prefersReducedMotion) {
+            animateSky(0);
+            setInterval(() => {
+                if (meteors.length < 4) {
+                    spawnMeteor();
+                }
+            }, 1800);
+        } else {
+            drawStars(0);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initStars();
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.14 });
+        reveals.forEach((item) => observer.observe(item));
+
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sections = [...document.querySelectorAll('main section[id]')];
+
+        const updateActiveLink = () => {
+            const offset = window.scrollY + 160;
+            let activeId = sections[0]?.id;
+
+            sections.forEach((section) => {
+                if (offset >= section.offsetTop) {
+                    activeId = section.id;
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
+            });
+        };
+
+        updateActiveLink();
+        window.addEventListener('scroll', updateActiveLink, { passive: true });
+
+    </script>
+</body>
+</html>
