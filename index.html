@@ -1412,17 +1412,20 @@
         // Hide Spline logo from shadow DOM
         const splineViewer = document.querySelector('spline-viewer');
         if (splineViewer) {
-            const hideLogo = () => {
-                const logo = splineViewer.shadowRoot?.getElementById('logo');
-                if (logo) {
-                    logo.style.display = 'none';
+            const injectStyle = () => {
+                if (splineViewer.shadowRoot) {
+                    if (!splineViewer.shadowRoot.querySelector('#hide-logo-style')) {
+                        const style = document.createElement('style');
+                        style.id = 'hide-logo-style';
+                        style.textContent = '#logo { display: none !important; opacity: 0 !important; pointer-events: none !important; }';
+                        splineViewer.shadowRoot.appendChild(style);
+                    }
                 }
             };
-            splineViewer.addEventListener('load-complete', hideLogo);
-            // Backup intervals as Spline viewer loads asynchronously
-            setTimeout(hideLogo, 500);
-            setTimeout(hideLogo, 1500);
-            setTimeout(hideLogo, 3000);
+            splineViewer.addEventListener('load-complete', injectStyle);
+            // Repeatedly check/inject during initial load window
+            const interval = setInterval(injectStyle, 200);
+            setTimeout(() => clearInterval(interval), 8000);
         }
 
     </script>
