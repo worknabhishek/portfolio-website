@@ -1409,6 +1409,22 @@
 
         hydrateSyncContent();
 
+        // Hide Spline logo from shadow DOM
+        const splineViewer = document.querySelector('spline-viewer');
+        if (splineViewer) {
+            const hideLogo = () => {
+                const logo = splineViewer.shadowRoot?.getElementById('logo');
+                if (logo) {
+                    logo.style.display = 'none';
+                }
+            };
+            splineViewer.addEventListener('load-complete', hideLogo);
+            // Backup intervals as Spline viewer loads asynchronously
+            setTimeout(hideLogo, 500);
+            setTimeout(hideLogo, 1500);
+            setTimeout(hideLogo, 3000);
+        }
+
     </script>
 </body>
 </html>
