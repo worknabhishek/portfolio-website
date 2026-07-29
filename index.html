@@ -930,6 +930,77 @@
                 transform: none;
             }
         }
+
+        /* Daily News Card Styles */
+        .news-card {
+            background: rgba(13, 30, 53, 0.64);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 18px;
+            padding: 2.2rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(14px);
+            max-width: 800px;
+            margin: 0 auto;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .news-card::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+        }
+
+        .news-card:hover {
+            border-color: rgba(0, 212, 255, 0.35);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.32), var(--glow-cyan);
+        }
+
+        .news-date {
+            font-family: 'Orbitron', monospace;
+            color: var(--accent-cyan);
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .news-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .news-summary {
+            font-size: 0.94rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+        }
+
+        .project-lang {
+            color: var(--accent-cyan);
+            font-family: 'Orbitron', monospace;
+        }
+
+        .project-stars {
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
     </style>
 </head>
 <body>
@@ -943,7 +1014,8 @@
         <a href="#hero" class="nav-logo">AR/</a>
         <ul class="nav-links">
             <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
+            <li><a href="#projects">Commits</a></li>
+            <li><a href="#research">Intel Loop</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -958,7 +1030,7 @@
                 </div>
                 <h1 class="hero-name">Abhishek<br>Rathore</h1>
                 <p class="hero-role">Aspiring DevOps Engineer</p>
-                <p class="hero-desc">Building infrastructure that runs at the speed of space. Skilled in AWS, Docker, Ansible, and cloud-native tooling, turning manual workflows into automated systems.</p>
+                <p class="hero-desc">Building infrastructure that runs at the speed of space. Skilled in AWS, Docker, Ansible, Agentic AI, and cloud-native tooling, turning manual workflows into automated systems.</p>
                 <div class="hero-stats">
                     <div class="stat-card">
                         <span class="stat-number">Cloud</span>
@@ -1011,34 +1083,35 @@
                 <div class="skill-chip"><div class="skill-icon">🔍</div><div class="skill-name">Prometheus</div></div>
                 <div class="skill-chip"><div class="skill-icon">🛡️</div><div class="skill-name">Nagios</div></div>
                 <div class="skill-chip"><div class="skill-icon">🐍</div><div class="skill-name">Python & Bash</div></div>
+                <div class="skill-chip"><div class="skill-icon">🤖</div><div class="skill-name">Agentic AI</div></div>
             </div>
         </section>
 
         <section id="projects" class="reveal">
-            <p class="section-label">// Mission Logs</p>
-            <h2 class="section-title">Featured Projects</h2>
-            <p class="section-sub">Hands-on DevOps work focused on deployment flow, infrastructure automation, and production-style environments.</p>
+            <p class="section-label">// Code Repository</p>
+            <h2 class="section-title">Live Commits</h2>
+            <p class="section-sub">Real-time feed of original cloud, automation, and infrastructure repositories synced dynamically from GitHub.</p>
             <div class="divider"></div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <span class="project-tag">Docker · Flask</span>
-                    <h3 class="project-title">Containerized Python Web App</h3>
-                    <p class="project-desc">Built and deployed a Flask-based application using Docker. Optimized Dockerfiles for efficiency and configured container networking for inter-service communication.</p>
-                </div>
-                <div class="project-card">
-                    <span class="project-tag">Ansible · IaC</span>
-                    <h3 class="project-title">Self-Healing Server Automation</h3>
-                    <p class="project-desc">Created Ansible playbooks to automate server configuration, service restarts, and state management, implementing self-healing infrastructure with IaC principles.</p>
-                </div>
-                <div class="project-card">
-                    <span class="project-tag">AWS · Nginx</span>
-                    <h3 class="project-title">AWS EC2 + Nginx Deployment</h3>
-                    <p class="project-desc">Deployed Nginx from scratch on AWS EC2, managing services via systemctl and securing access through AWS Security Groups and IAM policies.</p>
-                </div>
-                <div class="project-card">
-                    <span class="project-tag">Docker · CI/CD</span>
-                    <h3 class="project-title">Docker Multi-Stage Builds</h3>
-                    <p class="project-desc">Implemented multi-stage Docker builds to reduce image sizes and cleanly separate build environments from production runtimes.</p>
+            <div class="projects-grid" id="github-repos-container">
+                <!-- Repositories will load here dynamically -->
+            </div>
+        </section>
+
+        <section id="research" class="reveal">
+            <p class="section-label">// Intel Feed</p>
+            <h2 class="section-title">The Intelligence Loop</h2>
+            <p class="section-sub">Curated daily tech insights, architecture breakdowns, and research reviews updated dynamically by Gemini.</p>
+            <div class="divider"></div>
+            <div class="news-card" id="news-container">
+                <img id="news-image" src="" alt="Dynamic Tech Visual" style="width: 100%; height: auto; max-height: 400px; border-radius: 12px; margin-bottom: 1.5rem; display: none; object-fit: cover; border: 1px solid rgba(0, 212, 255, 0.15);">
+                <div class="news-date" id="news-date">Loading Feed...</div>
+                <h3 class="news-title" id="news-title">Connecting to intelligence network</h3>
+                <p class="news-summary" id="news-summary">Fetching the latest research briefings and breakthrough reports. Please stand by...</p>
+                <div id="news-sources-container" style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.2rem; display: none;">
+                    <p style="font-family: 'Orbitron', monospace; font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 1.5px;">References & Sources</p>
+                    <ul id="news-sources" style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.82rem; color: var(--text-muted); padding-left: 0;">
+                        <!-- Dynamic sources will load here -->
+                    </ul>
                 </div>
             </div>
         </section>
@@ -1258,6 +1331,83 @@
 
         updateActiveLink();
         window.addEventListener('scroll', updateActiveLink, { passive: true });
+
+        // Fetch and Hydrate Daily News and GitHub Repos
+        async function hydrateSyncContent() {
+            try {
+                const response = await fetch('data/content.json');
+                if (!response.ok) throw new Error('Data file fetch failed');
+                const data = await response.json();
+
+                // Hydrate Daily AI Tech News
+                if (data.news) {
+                    document.getElementById('news-date').textContent = data.news.date || new Date().toISOString().split('T')[0];
+                    document.getElementById('news-title').textContent = data.news.title || 'Tech News Feed';
+                    document.getElementById('news-summary').textContent = data.news.content || data.news.summary || 'Feed currently offline.';
+                    
+                    // Hydrate News Image
+                    const img = document.getElementById('news-image');
+                    if (data.news.image_url && img) {
+                        img.src = data.news.image_url;
+                        img.style.display = 'block';
+                    }
+
+                    // Hydrate News Sources
+                    const sourcesContainer = document.getElementById('news-sources-container');
+                    const sourcesList = document.getElementById('news-sources');
+                    if (data.news.sources && data.news.sources.length > 0 && sourcesContainer && sourcesList) {
+                        sourcesList.innerHTML = '';
+                        data.news.sources.forEach(source => {
+                            const li = document.createElement('li');
+                            li.style.display = 'flex';
+                            li.style.alignItems = 'center';
+                            li.style.gap = '8px';
+                            li.innerHTML = `
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-cyan);"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                                <span>${source}</span>
+                            `;
+                            sourcesList.appendChild(li);
+                        });
+                        sourcesContainer.style.display = 'block';
+                    }
+                }
+
+                // Hydrate GitHub Repos
+                const reposContainer = document.getElementById('github-repos-container');
+                if (data.repos && data.repos.length > 0 && reposContainer) {
+                    reposContainer.innerHTML = '';
+                    data.repos.forEach(repo => {
+                        const card = document.createElement('a');
+                        card.className = 'project-card';
+                        card.href = repo.url;
+                        card.target = '_blank';
+                        card.rel = 'noopener noreferrer';
+                        card.style.textDecoration = 'none';
+
+                        card.innerHTML = `
+                            <span class="project-tag">GitHub Repo</span>
+                            <h3 class="project-title">${repo.name}</h3>
+                            <p class="project-desc">${repo.description}</p>
+                            <div class="project-meta">
+                                <span class="project-lang">${repo.language}</span>
+                                <span class="project-stars">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle;"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    ${repo.stars}
+                                </span>
+                            </div>
+                        `;
+                        reposContainer.appendChild(card);
+                    });
+                }
+            } catch (error) {
+                console.error('Error hydrating dynamic portfolio content:', error);
+                document.getElementById('news-date').textContent = 'Intelligence Offline';
+                document.getElementById('news-title').textContent = 'Secure Feed Unavailable';
+                document.getElementById('news-summary').textContent = 'Failed to fetch the intelligence updates. Please try again later.';
+            }
+        }
+
+        hydrateSyncContent();
 
     </script>
 </body>

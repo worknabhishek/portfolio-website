@@ -1,0 +1,155 @@
+{
+  "news": {
+    "title": "Agentic AI is Transforming Modern Cloud & DevOps Pipelines",
+    "content": "AI agents are increasingly managing complex CI/CD tasks, auto-remediating production anomalies, and optimizing resource configurations dynamically. By integrating Large Language Models (LLMs) with platform APIs, these agents can read log outputs, synthesize code patches, and execute Terraform deployments autonomously, significantly reducing the Mean Time to Resolution (MTTR) for cloud incidents.",
+    "sources": [
+      "Google DeepMind Research",
+      "arXiv: Agentic Workflow Systems",
+      "CNCF Cloud Native Developments"
+    ],
+    "image_url": "https://image.pollinations.ai/prompt/futuristic%20DevOps%20pipeline%20architecture%20with%20glowing%20neural%20networks%2C%203d%20render%2C%20space%20theme?width=800&height=450&nologo=true&seed=74098",
+    "date": "2026-07-30"
+  },
+  "repos": [
+    {
+      "name": "AI-Cloud-Cost-Detective",
+      "description": "DevOps infrastructure and automation project focusing on Ai Cloud Cost Detective configured with Python.",
+      "url": "https://github.com/worknabhishek/AI-Cloud-Cost-Detective",
+      "stars": 0,
+      "language": "Python"
+    },
+    {
+      "name": "ai-kubernetes-troubleshooter",
+      "description": "DevOps infrastructure and automation project focusing on Ai Kubernetes Troubleshooter configured with JavaScript.",
+      "url": "https://github.com/worknabhishek/ai-kubernetes-troubleshooter",
+      "stars": 0,
+      "language": "JavaScript"
+    },
+    {
+      "name": "terraform-workspaces-mini-project",
+      "description": "DevOps infrastructure and automation project focusing on Terraform Workspaces Mini Project configured with HCL.",
+      "url": "https://github.com/worknabhishek/terraform-workspaces-mini-project",
+      "stars": 0,
+      "language": "HCL"
+    },
+    {
+      "name": "terraform-Provisions-Flask",
+      "description": "DevOps infrastructure and automation project focusing on Terraform Provisions Flask configured with HCL.",
+      "url": "https://github.com/worknabhishek/terraform-Provisions-Flask",
+      "stars": 0,
+      "language": "HCL"
+    },
+    {
+      "name": "terraform-aws-remote-backend",
+      "description": "DevOps infrastructure and automation project focusing on Terraform Aws Remote Backend configured with HCL.",
+      "url": "https://github.com/worknabhishek/terraform-aws-remote-backend",
+      "stars": 0,
+      "language": "HCL"
+    },
+    {
+      "name": "terraform-architecture-ec2",
+      "description": "DevOps infrastructure and automation project focusing on Terraform Architecture Ec2 configured with HCL.",
+      "url": "https://github.com/worknabhishek/terraform-architecture-ec2",
+      "stars": 0,
+      "language": "HCL"
+    },
+    {
+      "name": "jenkins-docker-cicd-pipeline",
+      "description": "DevOps infrastructure and automation project focusing on Jenkins Docker Cicd Pipeline configured with Other.",
+      "url": "https://github.com/worknabhishek/jenkins-docker-cicd-pipeline",
+      "stars": 0,
+      "language": "Other"
+    },
+    {
+      "name": "jenkins-practice-2",
+      "description": "DevOps infrastructure and automation project focusing on Jenkins Practice 2 configured with HTML.",
+      "url": "https://github.com/worknabhishek/jenkins-practice-2",
+      "stars": 0,
+      "language": "HTML"
+    },
+    {
+      "name": "jenkins-practice-1",
+      "description": "DevOps infrastructure and automation project focusing on Jenkins Practice 1 configured with Python.",
+      "url": "https://github.com/worknabhishek/jenkins-practice-1",
+      "stars": 0,
+      "language": "Python"
+    },
+    {
+      "name": "deployments-practice",
+      "description": "DevOps infrastructure and automation project focusing on Deployments Practice configured with Other.",
+      "url": "https://github.com/worknabhishek/deployments-practice",
+      "stars": 0,
+      "language": "Other"
+    },
+    {
+      "name": "kubernetes-first-pod",
+      "description": "DevOps infrastructure and automation project focusing on Kubernetes First Pod configured with Other.",
+      "url": "https://github.com/worknabhishek/kubernetes-first-pod",
+      "stars": 0,
+      "language": "Other"
+    },
+    {
+      "name": "portfolio-website",
+      "description": "DevOps infrastructure and automation project focusing on Portfolio Website configured with HTML.",
+      "url": "https://github.com/worknabhishek/portfolio-website",
+      "stars": 0,
+      "language": "HTML"
+    },
+    {
+      "name": "django-docker-devops",
+      "description": "DevOps infrastructure and automation project focusing on Django Docker Devops configured with Python.",
+      "url": "https://github.com/worknabhishek/django-docker-devops",
+      "stars": 0,
+      "language": "Python"
+    },
+    {
+      "name": "when-containers-die-data-lives",
+      "description": "DevOps infrastructure and automation project focusing on When Containers Die Data Lives configured with Python.",
+      "url": "https://github.com/worknabhishek/when-containers-die-data-lives",
+      "stars": 0,
+      "language": "Python"
+    },
+    {
+      "name": "Self-Healing-Infrastructure-using-Ansible",
+      "description": "DevOps infrastructure and automation project focusing on Self Healing Infrastructure Using Ansible configured with Other.",
+      "url": "https://github.com/worknabhishek/Self-Healing-Infrastructure-using-Ansible",
+      "stars": 0,
+      "language": "Other"
+    },
+    {
+      "name": "list-files-in-folders-Python-Project",
+      "description": "DevOps infrastructure and automation project focusing on List Files In Folders Python Project configured with Python.",
+      "url": "https://github.com/worknabhishek/list-files-in-folders-Python-Project",
+      "stars": 0,
+      "language": "Python"
+    },
+    {
+      "name": "Number-Guess-Game-Using-Python",
+      "description": "DevOps infrastructure and automation project focusing on Number Guess Game Using Python configured with Python.",
+      "url": "https://github.com/worknabhishek/Number-Guess-Game-Using-Python",
+      "stars": 0,
+      "language": "Python"
+    },
+    {
+      "name": "ansible-ec2-nginx-lab",
+      "description": "Hands-on configuration management lab using Ansible to automate Nginx deployment on Amazon Linux EC2 instances.",
+      "url": "https://github.com/worknabhishek/ansible-ec2-nginx-lab",
+      "stars": 0,
+      "language": "Other"
+    },
+    {
+      "name": "Linux-System-Info-Script",
+      "description": "A lightweight Bash automation tool that retrieves and displays key Linux system metrics such as uptime, disk usage, memory consumption, and host information.",
+      "url": "https://github.com/worknabhishek/Linux-System-Info-Script",
+      "stars": 0,
+      "language": "Shell"
+    },
+    {
+      "name": "aws-resource-tracker",
+      "description": "A lightweight DevOps project built with Bash and AWS CLI to monitor running EC2 instances and retrieve real-time AWS resource data.",
+      "url": "https://github.com/worknabhishek/aws-resource-tracker",
+      "stars": 0,
+      "language": "Shell"
+    }
+  ]
+}
