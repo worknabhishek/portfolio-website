@@ -4,6 +4,7 @@ import urllib.request
 import urllib.parse
 import urllib.error
 import random
+import time
 from datetime import datetime
 
 def fetch_github_repos(username):
@@ -74,37 +75,49 @@ def fetch_gemini_data(api_key, missing_desc_repos):
         }
     )
     
-    try:
-        with urllib.request.urlopen(req) as response:
-            res_data = json.loads(response.read().decode())
-            text_content = res_data["candidates"][0]["content"]["parts"][0]["text"].strip()
-            parsed = json.loads(text_content)
-            
-            # Format daily news details
-            news = parsed.get("news", {})
-            image_prompt = news.get("image_prompt", "cybernetic cloud infrastructure nodes floating in digital space nebula")
-            encoded_prompt = urllib.parse.quote(image_prompt)
-            seed = random.randint(1, 100000)
-            news["image_url"] = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=800&height=450&nologo=true&seed={seed}"
-            news["date"] = datetime.now().strftime("%Y-%m-%d")
-            news["debug_api_key_status"] = "Gemini Succeeded"
-            
-            return news, parsed.get("repo_descriptions", {})
-    except urllib.error.HTTPError as e:
-        error_body = ""
+    # Implement retry loop for robust rate limit handling
+    max_retries = 3
+    for attempt in range(max_retries):
         try:
-            error_body = e.read().decode()
-        except Exception:
-            pass
-        return None, f"Gemini HTTPError {e.code} {e.reason}: {error_body}"
-    except Exception as e:
-        return None, f"Gemini GenericError: {str(e)}"
+            with urllib.request.urlopen(req) as response:
+                res_data = json.loads(response.read().decode())
+                text_content = res_data["candidates"][0]["content"]["parts"][0]["text"].strip()
+                parsed = json.loads(text_content)
+                
+                # Format daily news details
+                news = parsed.get("news", {})
+                image_prompt = news.get("image_prompt", "cybernetic cloud infrastructure nodes floating in digital space nebula")
+                encoded_prompt = urllib.parse.quote(image_prompt)
+                seed = random.randint(1, 100000)
+                news["image_url"] = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=800&height=450&nologo=true&seed={seed}"
+                news["date"] = datetime.now().strftime("%Y-%m-%d")
+                news["debug_api_key_status"] = "Gemini Succeeded"
+                
+                return news, parsed.get("repo_descriptions", {})
+        except urllib.error.HTTPError as e:
+            error_body = ""
+            try:
+                error_body = e.read().decode()
+            except Exception:
+                pass
+                
+            # If rate limited (429), wait and retry
+            if e.code == 429 and attempt < max_retries - 1:
+                wait_time = 15 * (attempt + 1)
+                print(f"Rate limited (429). Retrying in {wait_time}s...")
+                time.sleep(wait_time)
+                continue
+                
+            return None, f"Gemini HTTPError {e.code} {e.reason}: {error_body}"
+        except Exception as e:
+            return None, f"Gemini GenericError: {str(e)}"
+            
+    return None, "Gemini failed after maximum retries due to rate limits."
 
 def fetch_openai_data(api_key, missing_desc_repos):
     api_key_clean = api_key.strip()
     url = "https://api.openai.com/v1/chat/completions"
     
-    # Prepare list of repos needing descriptions
     repos_info = [f"- Name: {r['name']}, Language: {r['language']}" for r in missing_desc_repos]
     repos_str = "\n".join(repos_info)
     
