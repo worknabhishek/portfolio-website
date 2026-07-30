@@ -18,7 +18,6 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-device: 'false'
           python-version: '3.11'
 
       - name: Run Sync Script
