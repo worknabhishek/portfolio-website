@@ -2,6 +2,7 @@ import os
 import json
 import urllib.request
 import urllib.parse
+import urllib.error
 import random
 from datetime import datetime
 
@@ -89,8 +90,13 @@ def fetch_gemini_data(api_key, missing_desc_repos):
             news["debug_api_key_status"] = "Found and Succeeded"
             
             return news, parsed.get("repo_descriptions", {})
-    except Exception as e:
-        print(f"Error querying Gemini API: {e}")
+    except urllib.error.HTTPError as e:
+        error_body = ""
+        try:
+            error_body = e.read().decode()
+        except Exception:
+            pass
+        print(f"HTTP Error querying Gemini API: {e.code} - {e.reason} - {error_body}")
         seed = random.randint(1, 100000)
         fallback_prompt = "futuristic DevOps pipeline architecture with glowing neural networks, 3d render, space theme"
         encoded_fallback = urllib.parse.quote(fallback_prompt)
@@ -104,7 +110,26 @@ def fetch_gemini_data(api_key, missing_desc_repos):
             ],
             "image_url": f"https://image.pollinations.ai/prompt/{encoded_fallback}?width=800&height=450&nologo=true&seed={seed}",
             "date": datetime.now().strftime("%Y-%m-%d"),
-            "debug_api_key_status": "Found but Failed",
+            "debug_api_key_status": "Found but Failed with HTTPError",
+            "debug_error": f"{e.code} {e.reason}: {error_body}"
+        }
+        return fallback_news, {}
+    except Exception as e:
+        print(f"Generic Error querying Gemini API: {e}")
+        seed = random.randint(1, 100000)
+        fallback_prompt = "futuristic DevOps pipeline architecture with glowing neural networks, 3d render, space theme"
+        encoded_fallback = urllib.parse.quote(fallback_prompt)
+        fallback_news = {
+            "title": "Agentic AI is Transforming Modern Cloud & DevOps Pipelines",
+            "content": "AI agents are increasingly managing complex CI/CD tasks, auto-remediating production anomalies, and optimizing resource configurations dynamically. By integrating Large Language Models (LLMs) with platform APIs, these agents can read log outputs, synthesize code patches, and execute Terraform deployments autonomously, significantly reducing the Mean Time to Resolution (MTTR) for cloud incidents.",
+            "sources": [
+                "Google DeepMind Research",
+                "arXiv: Agentic Workflow Systems",
+                "CNCF Cloud Native Developments"
+            ],
+            "image_url": f"https://image.pollinations.ai/prompt/{encoded_fallback}?width=800&height=450&nologo=true&seed={seed}",
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "debug_api_key_status": "Found but Failed with GenericError",
             "debug_error": str(e)
         }
         return fallback_news, {}
