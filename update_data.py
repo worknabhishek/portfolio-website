@@ -82,6 +82,7 @@ def fetch_gemini_data(api_key, missing_desc_repos):
             seed = random.randint(1, 100000)
             news["image_url"] = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=800&height=450&nologo=true&seed={seed}"
             news["date"] = datetime.now().strftime("%Y-%m-%d")
+            news["debug_api_key_status"] = "Found and Succeeded"
             
             return news, parsed.get("repo_descriptions", {})
     except Exception as e:
@@ -98,7 +99,9 @@ def fetch_gemini_data(api_key, missing_desc_repos):
                 "CNCF Cloud Native Developments"
             ],
             "image_url": f"https://image.pollinations.ai/prompt/{encoded_fallback}?width=800&height=450&nologo=true&seed={seed}",
-            "date": datetime.now().strftime("%Y-%m-%d")
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "debug_api_key_status": "Found but Failed",
+            "debug_error": str(e)
         }
         return fallback_news, {}
 
@@ -124,7 +127,8 @@ def main():
                 "CNCF Cloud Native Developments"
             ],
             "image_url": f"https://image.pollinations.ai/prompt/{encoded_fallback}?width=800&height=450&nologo=true&seed={seed}",
-            "date": datetime.now().strftime("%Y-%m-%d")
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "debug_api_key_status": "Not Found"
         }
         generated_descriptions = {}
     else:
