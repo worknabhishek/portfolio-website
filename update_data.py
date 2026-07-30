@@ -34,7 +34,8 @@ def fetch_github_repos(username):
         return []
 
 def fetch_gemini_data(api_key, missing_desc_repos):
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    api_key_clean = api_key.strip()
+    url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={api_key_clean}"
     
     # Prepare list of repos needing descriptions
     repos_info = [f"- Name: {r['name']}, Language: {r['language']}" for r in missing_desc_repos]
@@ -113,6 +114,8 @@ def main():
     missing_desc_repos = [r for r in repos if not r["description"]]
     
     api_key = os.environ.get("GEMINI_API_KEY")
+    if api_key:
+        api_key = api_key.strip()
     if not api_key:
         print("Warning: GEMINI_API_KEY environment variable not found. Using fallback mock data.")
         seed = random.randint(1, 100000)
