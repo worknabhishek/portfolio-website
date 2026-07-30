@@ -1335,7 +1335,8 @@
         // Fetch and Hydrate Daily News and GitHub Repos
         async function hydrateSyncContent() {
             try {
-                const response = await fetch('data/content.json');
+                // Use a cache-buster query param changing hourly to prevent browser/CDN caching issues
+                const response = await fetch('data/content.json?t=' + Math.floor(Date.now() / 3600000));
                 if (!response.ok) throw new Error('Data file fetch failed');
                 const data = await response.json();
 
