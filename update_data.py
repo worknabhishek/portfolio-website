@@ -35,7 +35,7 @@ def fetch_github_repos(username):
 
 def fetch_gemini_data(api_key, missing_desc_repos):
     api_key_clean = api_key.strip()
-    url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={api_key_clean}"
+    url = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent"
     
     # Prepare list of repos needing descriptions
     repos_info = [f"- Name: {r['name']}, Language: {r['language']}" for r in missing_desc_repos]
@@ -67,7 +67,10 @@ def fetch_gemini_data(api_key, missing_desc_repos):
     req = urllib.request.Request(
         url,
         data=json.dumps(data).encode("utf-8"),
-        headers={"Content-Type": "application/json"}
+        headers={
+            "Content-Type": "application/json",
+            "x-goog-api-key": api_key_clean
+        }
     )
     
     try:
