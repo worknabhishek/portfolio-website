@@ -96,6 +96,18 @@ def fetch_gemini_data(api_key, missing_desc_repos):
             error_body = e.read().decode()
         except Exception:
             pass
+            
+        # Programmatically list all available models to diagnostic log
+        available_models = []
+        try:
+            list_url = "https://generativelanguage.googleapis.com/v1beta/models"
+            list_req = urllib.request.Request(list_url, headers={"x-goog-api-key": api_key_clean})
+            with urllib.request.urlopen(list_req) as list_res:
+                models_data = json.loads(list_res.read().decode())
+                available_models = [m["name"] for m in models_data.get("models", [])]
+        except Exception as list_err:
+            available_models = [f"Failed to list: {str(list_err)}"]
+
         print(f"HTTP Error querying Gemini API: {e.code} - {e.reason} - {error_body}")
         seed = random.randint(1, 100000)
         fallback_prompt = "futuristic DevOps pipeline architecture with glowing neural networks, 3d render, space theme"
@@ -111,7 +123,7 @@ def fetch_gemini_data(api_key, missing_desc_repos):
             "image_url": f"https://image.pollinations.ai/prompt/{encoded_fallback}?width=800&height=450&nologo=true&seed={seed}",
             "date": datetime.now().strftime("%Y-%m-%d"),
             "debug_api_key_status": "Found but Failed with HTTPError",
-            "debug_error": f"{e.code} {e.reason}: {error_body}"
+            "debug_error": f"{e.code} {e.reason}: {error_body}. Available Models: {available_models}"
         }
         return fallback_news, {}
     except Exception as e:
